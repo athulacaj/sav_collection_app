@@ -115,9 +115,9 @@ class ViewRecordDatabase {
   }
 
   static Future<Map> rangeData() async {
-    DateTime fdate = DateTime(now.year, now.month, 25);
-    DateTime ldate = DateTime(now.year, now.month, 27, 23, 59, 59);
-    print(ldate.day);
+    print("called");
+    DateTime fdate = DateTime(now.year, 3, 25);
+    DateTime ldate = DateTime(now.year, 3, 27, 23, 59, 59);
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
           .collection("records/account/records")
@@ -125,12 +125,12 @@ class ViewRecordDatabase {
           .where('dateMs', isLessThanOrEqualTo: ldate.millisecondsSinceEpoch)
           .get();
 
-      print("map");
+      print(snapshot.docs);
       print(makeDailyStatistics(snapshot.docs));
       return makeDailyStatistics(snapshot.docs);
     } catch (e) {
       print(e.toString());
-      throw Exception("failed to save to db check connection");
+      throw Exception("failed to load data");
     }
   }
 }

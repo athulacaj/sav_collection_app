@@ -50,8 +50,9 @@ class MyZoomableWidget extends StatelessWidget {
         TransformationController();
 
     Matrix4 n =
-        Matrix4.fromList([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, .69]);
-    transformationController.value = n..translate(-56.0, 0.0);
+        Matrix4.fromList([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, .7]);
+    // transformationController.value = n;
+    transformationController.value = n..translate(-58.0, 0.0);
     return Scaffold(
       backgroundColor: Colors.white,
       // backgroundColor: Colors.white.withOpacity(
@@ -67,7 +68,7 @@ class MyZoomableWidget extends StatelessWidget {
               icon: Icon(Icons.close, color: Colors.red, size: 30)),
           Expanded(
             child: ListView(
-              // physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               children: [
                 // TextButton(
                 //     onPressed: () {
@@ -88,11 +89,18 @@ class MyZoomableWidget extends StatelessWidget {
                   transformationController: transformationController,
                   child: Container(
                       // 1/.69
-                      constraints: BoxConstraints(
-                          maxHeight: childHeight * (1 / .69) + 20),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: size.width * .16, vertical: 20),
-                      child: child),
+                      // constraints: BoxConstraints(
+                      //     minHeight: childHeight * (1 / .69) + 20),
+                      height: childHeight * (1 / .69) + 200,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * .165),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                              height: childHeight * (1 / .7) - 30,
+                              child: child),
+                        ],
+                      )),
                 ),
                 // Padding(
                 //   padding: EdgeInsets.symmetric(

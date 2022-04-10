@@ -67,6 +67,7 @@ class _SelectShopsState extends State<SelectShops> {
                             setState(() {});
                             try {
                               List _itemsList = [];
+                              // retrieve data of items
                               _itemsList =
                                   await Provider.of<ItemDetailsProvider>(
                                           context,
@@ -74,13 +75,16 @@ class _SelectShopsState extends State<SelectShops> {
                                       .getData();
                               // List prvsRecordList = await RecordDatabase
                               //     .getCustomerPrvsRecordData('100');
-                              // print(prvsRecordList);
+                              Map? alreadyAddedData =
+                                  await RecordDatabase.getDataIfAlreadyAdded(
+                                      customerData['code']);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AddRecords(
                                             userData: customerData,
                                             itemsList: _itemsList,
+                                            alreadyAdded: alreadyAddedData,
                                           )));
                             } catch (e) {
                               print(e);

@@ -74,6 +74,8 @@ class _DailyStatisticsState extends State<DailyStatistics> {
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int i) {
                               Map data = allOrdersList[i];
+
+                              // function to make total of individual customer
                               Map totalOfData =
                                   data['amountReturnItemAmountList'].reduce(
                                       (Map<String, dynamic> first,
@@ -214,6 +216,12 @@ class _DailyStatisticsState extends State<DailyStatistics> {
                       BoxDecoration(border: Border.all(color: Colors.grey)),
                   child: Row(
                     children: [
+                      TextButton(
+                          onPressed: () {
+                            selectedCustomer = -1;
+                            setState(() {});
+                          },
+                          child: Text("clear")),
                       TextButton(
                           onPressed: () {
                             showDialog(

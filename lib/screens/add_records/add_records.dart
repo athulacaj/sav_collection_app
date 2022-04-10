@@ -13,7 +13,11 @@ import 'components/return_item_enter_modal_sheet.dart';
 class AddRecords extends StatefulWidget {
   final Map userData;
   final List itemsList;
-  AddRecords({required this.userData, required this.itemsList});
+  final Map? alreadyAdded;
+  AddRecords(
+      {required this.userData,
+      required this.itemsList,
+      required this.alreadyAdded});
   @override
   _AddRecordsState createState() => _AddRecordsState();
 }
@@ -55,6 +59,14 @@ class _AddRecordsState extends State<AddRecords> {
         itemList: widget.itemsList,
         key: _key,
         showModalSheet: returnItemEnteringModelClass.showEnterItemDetailsSheet);
+    addedPreviousData();
+  }
+
+  void addedPreviousData() {
+    if (widget.alreadyAdded != null) {
+      _cashTextController.text = widget.alreadyAdded!['amount'].toString();
+      returnItemsList = widget.alreadyAdded!['itemList'].cast<Map>();
+    }
   }
 
   DateTime _selectedDate = DateTime.now();

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sav_sales_app/providers/itemDetailsProvider.dart';
 import 'package:sav_sales_app/screens/addExcelPrice/excel_convertor.dart';
-import 'package:sav_sales_app/screens/players/manage_players.dart';
-import 'package:sav_sales_app/screens/players/players_database.dart';
-import 'package:sav_sales_app/screens/players/reset-or%20_add_palyers.dart';
+import 'package:sav_sales_app/screens/adminpannel/admin_pannel_screen.dart';
 import 'package:sav_sales_app/screens/view_records/daily_stastics.dart';
 import 'package:sav_sales_app/widgets/ModalProgressHudWidget.dart';
 
@@ -12,6 +10,8 @@ import '../RecordsDatabase.dart';
 import 'HomeButton.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String id = 'Home_Screen';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ItemDetailsProvider.getDataFromDatabase();
   }
 
   @override
@@ -54,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //
                         List<Map> customersList =
                             await RecordDatabase.getCustomersList();
+                        ItemDetailsProvider.getDataFromDatabase();
 
                         Navigator.push(
                             context,
@@ -81,27 +81,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(height: 10),
-              HomeButton(
-                title: "Read Excel",
-                iconData: Icons.mark_email_read,
-                onClick: () async {
-                  List excelList = await excelToJson();
-                  customersDataGenerator(excelList);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HomeButton(
+                    title: "Admin Panel",
+                    iconData: Icons.admin_panel_settings,
+                    onClick: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminPanelScreen()));
+                    },
+                  ),
+                  HomeButton(
+                    title: "Read Excel",
+                    iconData: Icons.mark_email_read,
+                    onClick: () async {
+                      List excelList = await excelToJson();
+                      customersDataGenerator(excelList);
+                    },
+                  ),
+                ],
               ),
               // TextButton(
               //     onPressed: () {
               //       savePlayerOrReset();
               //     },
               //     child: Text("Reset")),
-              TextButton(
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ManagePlayers()));
-                  },
-                  child: Text("Players")),
             ],
           ),
         ),
